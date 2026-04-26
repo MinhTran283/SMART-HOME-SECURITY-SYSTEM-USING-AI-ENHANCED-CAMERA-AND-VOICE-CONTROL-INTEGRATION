@@ -1,0 +1,1 @@
+trial_id,scenario,lighting_condition,expected_person,system_alerted,event_id,timestamp,source_mode,source_label,confidence,end_to_end_local_seconds,event_to_notification_seconds,telegram_elapsed_seconds,outcome,notes

@@ -1,0 +1,7 @@
+trial_id,scenario,lighting_condition,expected_person,system_alerted,event_id,timestamp,source_mode,source_label,confidence,end_to_end_local_seconds,event_to_notification_seconds,telegram_elapsed_seconds,outcome,notes
+D01,daylight_person_crossing,normal light,true,true,evt_20260426_221357_116536,2026-04-26T22:13:57.121428Z,webcam,Webcam 0,0.943,0.022,0.691,0.667,,Detected motion and person; snapshot sent to Telegram.
+D02,daylight_person_crossing,normal light,true,true,evt_20260426_221417_991915,2026-04-26T22:14:17.993462Z,webcam,Webcam 0,0.944,0.019,0.577,0.558,,Detected motion and person; snapshot sent to Telegram.
+L01,low_light_person_crossing,low light,true,true,evt_20260426_221511_710943,2026-04-26T22:15:11.712584Z,webcam,Webcam 0,0.758,0.018,0.650,0.631,,Detected motion and person under lower light; snapshot sent to Telegram.
+N01,no_person_static_scene,normal light,false,false,,,,,,,,,,No motion detected; no Telegram notification.
+O01,no_person_object_motion,normal light,false,false,,,,,,,,,,Motion was detected, but no person was detected; no snapshot or Telegram notification.
+M01,manual_snapshot_telegram,normal light,,,,evt_20260426_221922_630696,2026-04-26T22:19:22.633014Z,webcam,Webcam 0,,0.003,0.705,0.701,,Functional validation only; manual snapshot and Telegram delivery succeeded, excluded from detection metrics.

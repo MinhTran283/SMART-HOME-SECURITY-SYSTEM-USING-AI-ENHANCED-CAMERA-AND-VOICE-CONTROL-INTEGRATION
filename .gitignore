@@ -1,0 +1,23 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Runtime evidence and private camera captures
+events/
+logs/
+tmp*/
+tmps*/
+
+# Local document QA render outputs
+docs/phase2_operation_docx_render/
+docs/phase2_operation_contact_sheet.jpg
+
+# Local editor/system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

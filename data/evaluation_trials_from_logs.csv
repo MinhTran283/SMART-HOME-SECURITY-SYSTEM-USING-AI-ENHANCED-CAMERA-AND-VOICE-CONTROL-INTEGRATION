@@ -1,0 +1,14 @@
+trial_id,scenario,lighting_condition,expected_person,system_alerted,event_id,timestamp,source_mode,source_label,confidence,end_to_end_local_seconds,event_to_notification_seconds,telegram_elapsed_seconds,outcome,notes
+LOG001,,,,true,a7d83726-2218-4490-b0ee-9d6a13847ece,2026-04-20T04:42:50.055556,,,,,,,,prefilled from event log; verify expected_person manually
+LOG002,,,,true,9f33c3ec-0fd9-4977-9839-23aa4617caba,2026-04-20T04:43:00.105242,,,,,,,,prefilled from event log; verify expected_person manually
+LOG003,,,,true,evt_20260426_115349_613512,2026-04-26T11:53:49.614989Z,webcam,Webcam 0,0.787,0.506,,,,prefilled from event log; verify expected_person manually
+LOG004,,,,true,evt_20260426_120952_841674,2026-04-26T12:09:52.843510Z,webcam,Webcam 0,0.966,0.019,0.750,0.620,,prefilled from event log; verify expected_person manually
+LOG005,,,,true,evt_20260426_121003_182709,2026-04-26T12:10:03.184943Z,webcam,Webcam 0,0.972,0.022,0.652,0.629,,prefilled from event log; verify expected_person manually
+LOG006,,,,true,evt_20260426_121137_776818,2026-04-26T12:11:37.778968Z,webcam,Webcam 0,0.999,0.032,0.777,0.743,,prefilled from event log; verify expected_person manually
+LOG007,,,,true,evt_20260426_121147_791627,2026-04-26T12:11:47.794291Z,webcam,Webcam 0,0.951,0.031,0.770,0.738,,prefilled from event log; verify expected_person manually
+LOG008,,,,true,evt_20260426_121157_816720,2026-04-26T12:11:57.819002Z,webcam,Webcam 0,0.901,0.032,0.984,0.951,,prefilled from event log; verify expected_person manually
+LOG009,,,,true,evt_20260426_121207_888656,2026-04-26T12:12:07.890923Z,webcam,Webcam 0,0.999,0.040,0.853,0.812,,prefilled from event log; verify expected_person manually
+LOG010,,,,true,evt_20260426_121217_954996,2026-04-26T12:12:17.958417Z,webcam,Webcam 0,0.963,0.057,0.958,0.900,,prefilled from event log; verify expected_person manually
+LOG011,,,,true,evt_20260426_121228_872389,2026-04-26T12:12:28.875105Z,webcam,Webcam 0,0.984,0.036,0.843,0.805,,prefilled from event log; verify expected_person manually
+LOG012,,,,true,evt_20260426_121846_601501,2026-04-26T12:18:46.604028Z,webcam,Webcam 0,0.996,0.031,0.848,0.668,,prefilled from event log; verify expected_person manually
+LOG013,,,,true,evt_20260426_121916_621622,2026-04-26T12:19:16.624888Z,webcam,Webcam 0,0.996,0.027,0.745,0.717,,prefilled from event log; verify expected_person manually

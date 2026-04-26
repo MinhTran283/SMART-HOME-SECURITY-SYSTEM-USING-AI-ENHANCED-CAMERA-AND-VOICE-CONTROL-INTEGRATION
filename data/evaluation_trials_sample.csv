@@ -1,0 +1,6 @@
+trial_id,scenario,lighting_condition,expected_person,system_alerted,event_id,timestamp,source_mode,source_label,confidence,end_to_end_local_seconds,event_to_notification_seconds,telegram_elapsed_seconds,outcome,notes
+SAMPLE01,daylight_person_crossing,daylight,true,true,sample_event_001,2026-04-26T10:01:00Z,webcam,Webcam 0,0.82,0.44,0.91,0.63,,sample only - replace with official trial data
+SAMPLE02,daylight_person_crossing,daylight,true,true,sample_event_002,2026-04-26T10:02:00Z,webcam,Webcam 0,0.78,0.47,0.88,0.61,,sample only - replace with official trial data
+SAMPLE03,low_light_person_crossing,low light,true,false,,,,,,,,,sample false negative row
+SAMPLE04,no_person_object_motion,daylight,false,true,sample_event_004,2026-04-26T10:04:00Z,webcam,Webcam 0,0.66,0.48,0.98,0.70,,sample false positive row
+SAMPLE05,no_person_static_scene,daylight,false,false,,,,,,,,,sample true negative row

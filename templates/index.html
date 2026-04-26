@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart Security Prototype</title>
+
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #eef2f6;
+            --panel: #ffffff;
+            --text: #17202a;
+            --muted: #617084;
+            --line: #d9e1ea;
+            --green: #16794c;
+            --red: #b42318;
+            --blue: #175cd3;
+            --amber: #b54708;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 24px;
+            background: var(--panel);
+            border-bottom: 1px solid var(--line);
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 22px;
+            line-height: 1.25;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+            gap: 18px;
+            padding: 18px 24px 24px;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .video-wrap {
+            background: #111827;
+            aspect-ratio: 4 / 3;
+        }
+
+        .video-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .side {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .control-body {
+            display: grid;
+            gap: 14px;
+            padding: 16px;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .status-pill {
+            min-width: 104px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: #e8eef6;
+            color: #24364b;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0;
+        }
+
+        .status-pill.armed {
+            background: #dcfae6;
+            color: var(--green);
+        }
+
+        .status-pill.disarmed {
+            background: #fee4e2;
+            color: var(--red);
+        }
+
+        .status-pill.cooldown {
+            background: #fef0c7;
+            color: var(--amber);
+        }
+
+        .button-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        button {
+            min-height: 42px;
+            border: 0;
+            border-radius: 8px;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        button:disabled {
+            cursor: wait;
+            opacity: 0.7;
+        }
+
+        .arm {
+            background: var(--green);
+        }
+
+        .disarm {
+            background: var(--red);
+        }
+
+        .snapshot {
+            background: var(--blue);
+        }
+
+        .logout {
+            min-height: 36px;
+            padding: 0 12px;
+            color: var(--text);
+            background: #edf2f7;
+        }
+
+        .message {
+            min-height: 20px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .diagnostics {
+            display: grid;
+            gap: 6px;
+            padding: 10px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fbfcfe;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        .diagnostic-value {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .events {
+            display: grid;
+            gap: 10px;
+            padding: 12px;
+            max-height: 620px;
+            overflow: auto;
+        }
+
+        .event {
+            display: grid;
+            grid-template-columns: 92px minmax(0, 1fr);
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fbfcfe;
+        }
+
+        .event img {
+            width: 92px;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #d9e1ea;
+        }
+
+        .event-thumb-missing {
+            width: 92px;
+            aspect-ratio: 4 / 3;
+            display: grid;
+            place-items: center;
+            border-radius: 6px;
+            background: #edf2f7;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .event-title {
+            font-size: 14px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .event-meta {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.4;
+            overflow-wrap: anywhere;
+        }
+
+        .empty {
+            padding: 16px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        @media (max-width: 920px) {
+            header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            main {
+                grid-template-columns: 1fr;
+                padding: 14px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .button-row {
+                grid-template-columns: 1fr;
+            }
+
+            .event {
+                grid-template-columns: 76px minmax(0, 1fr);
+            }
+
+            .event img {
+                width: 76px;
+            }
+
+            .event-thumb-missing {
+                width: 76px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>Smart Home Security System</h1>
+            <p class="event-meta">Camera: {{ camera_id }} | Source: {{ source_label }}</p>
+        </div>
+        {% if auth_enabled %}
+        <form method="post" action="/logout">
+            <button class="logout" type="submit">Log out</button>
+        </form>
+        {% endif %}
+    </header>
+
+    <main>
+        <section class="panel">
+            <div class="panel-header">
+                <h2 class="panel-title">Live View</h2>
+                <span id="status" class="status-pill">Loading</span>
+            </div>
+            <div class="video-wrap">
+                <img src="/video_feed" alt="Live camera feed">
+            </div>
+        </section>
+
+        <aside class="side">
+            <section class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Control</h2>
+                </div>
+                <div class="control-body">
+                    <div class="status-row">
+                        <span class="event-meta">Current state</span>
+                        <span id="statusDetail" class="event-title">Loading</span>
+                    </div>
+                    <div class="button-row">
+                        <button class="arm" data-command="arm" type="button">Arm</button>
+                        <button class="disarm" data-command="disarm" type="button">Disarm</button>
+                        <button class="snapshot" data-command="snapshot" type="button">Snapshot</button>
+                    </div>
+                    <div class="diagnostics">
+                        <div>Motion: <span id="motionStatus" class="diagnostic-value">n/a</span></div>
+                        <div>Person: <span id="personStatus" class="diagnostic-value">n/a</span></div>
+                        <div>Confidence: <span id="confidenceStatus" class="diagnostic-value">n/a</span></div>
+                    </div>
+                    <p id="message" class="message" aria-live="polite"></p>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Recent Events</h2>
+                </div>
+                <div id="events" class="events"></div>
+            </section>
+        </aside>
+    </main>
+
+    <script>
+        const statusEl = document.getElementById("status");
+        const statusDetailEl = document.getElementById("statusDetail");
+        const messageEl = document.getElementById("message");
+        const eventsEl = document.getElementById("events");
+        const motionStatusEl = document.getElementById("motionStatus");
+        const personStatusEl = document.getElementById("personStatus");
+        const confidenceStatusEl = document.getElementById("confidenceStatus");
+        const buttons = Array.from(document.querySelectorAll("[data-command]"));
+
+        function setButtonsDisabled(disabled) {
+            buttons.forEach((button) => {
+                button.disabled = disabled;
+            });
+        }
+
+        async function sendCommand(command) {
+            setButtonsDisabled(true);
+            messageEl.textContent = "";
+
+            try {
+                const res = await fetch("/api/command", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({command})
+                });
+                const data = await res.json();
+                messageEl.textContent = data.message || "Command completed";
+                await Promise.all([loadStatus(), loadEvents()]);
+            } catch (err) {
+                messageEl.textContent = "Command failed";
+            } finally {
+                setButtonsDisabled(false);
+            }
+        }
+
+        async function loadStatus() {
+            const res = await fetch("/api/status");
+            if (!res.ok) {
+                statusEl.textContent = "Offline";
+                statusDetailEl.textContent = "Unavailable";
+                return;
+            }
+
+            const data = await res.json();
+            const state = data.state || "UNKNOWN";
+            const normalized = (data.state_normalized || state).toLowerCase();
+            statusEl.textContent = state;
+            statusEl.className = `status-pill ${normalized}`;
+
+            if (normalized === "cooldown" && data.cooldown_remaining_seconds > 0) {
+                statusDetailEl.textContent = `${state} (${data.cooldown_remaining_seconds}s)`;
+            } else {
+                statusDetailEl.textContent = state;
+            }
+
+            const detection = data.detection || {};
+            motionStatusEl.textContent = detection.motion_detected
+                ? `yes (${detection.motion_box_count || 0})`
+                : "no";
+            personStatusEl.textContent = detection.person_detected ? "yes" : "no";
+            confidenceStatusEl.textContent = formatConfidence(detection.person_confidence);
+        }
+
+        function formatConfidence(value) {
+            if (value === null || value === undefined) {
+                return "n/a";
+            }
+            return Number(value).toFixed(2);
+        }
+
+        function renderEvent(event) {
+            const item = document.createElement("article");
+            item.className = "event";
+
+            let image;
+            if (event.image_url) {
+                image = document.createElement("img");
+                image.alt = event.event_type || "Security event";
+                image.src = event.image_url;
+            } else {
+                image = document.createElement("div");
+                image.className = "event-thumb-missing";
+                image.setAttribute("role", "img");
+                image.setAttribute("aria-label", "Snapshot unavailable");
+                image.textContent = "No image";
+            }
+
+            const body = document.createElement("div");
+
+            const title = document.createElement("div");
+            title.className = "event-title";
+            title.textContent = event.event_type || "event";
+
+            const meta = document.createElement("div");
+            meta.className = "event-meta";
+            const latency = event.latency && event.latency.end_to_end_local_seconds !== undefined
+                ? `latency: ${Number(event.latency.end_to_end_local_seconds).toFixed(3)}s`
+                : null;
+            meta.textContent = [
+                event.timestamp || "",
+                `state: ${event.system_state || "unknown"}`,
+                `confidence: ${formatConfidence(event.confidence)}`,
+                `source: ${event.source || "system"}`,
+                latency
+            ].filter(Boolean).join(" | ");
+
+            body.append(title, meta);
+            item.append(image, body);
+            return item;
+        }
+
+        async function loadEvents() {
+            const res = await fetch("/api/events");
+            if (!res.ok) {
+                return;
+            }
+
+            const data = await res.json();
+            eventsEl.replaceChildren();
+
+            if (!data.length) {
+                const empty = document.createElement("div");
+                empty.className = "empty";
+                empty.textContent = "No events recorded";
+                eventsEl.append(empty);
+                return;
+            }
+
+            data.forEach((event) => {
+                eventsEl.append(renderEvent(event));
+            });
+        }
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", () => sendCommand(button.dataset.command));
+        });
+
+        setInterval(loadStatus, 2000);
+        setInterval(loadEvents, 3000);
+
+        loadStatus();
+        loadEvents();
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+trial_id,scenario,lighting_condition,expected_person,system_alerted,event_id,timestamp,source_mode,source_label,confidence,end_to_end_local_seconds,event_to_notification_seconds,telegram_elapsed_seconds,outcome,notes
+D01,daylight_person_crossing,normal light,true,,,,,,,,,,,Walk into the camera frame naturally from outside the view.
+D02,daylight_person_crossing,normal light,true,,,,,,,,,,,Repeat normal person entry from a slightly different angle.
+L01,low_light_person_crossing,low light,true,,,,,,,,,,,Dim the room/light slightly, then walk into frame.
+N01,no_person_static_scene,normal light,false,,,,,,,,,,,Arm the system and keep the camera view empty and still for 20 seconds.
+O01,no_person_object_motion,normal light,false,,,,,,,,,,,Move a small object in view while keeping your body outside the camera frame.
+M01,manual_snapshot_telegram,normal light,true,,,,,,,,,,,Use manual snapshot to confirm evidence capture and Telegram delivery.
