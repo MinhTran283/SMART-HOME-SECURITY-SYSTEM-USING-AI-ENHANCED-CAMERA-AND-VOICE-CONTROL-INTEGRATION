@@ -21,7 +21,6 @@ Tested on Windows with Python 3.13.7.
 - `docs/phase2_implementation_summary.md`: implementation summary for the thesis write-up.
 - `docs/evaluation_protocol.md`: official trial protocol and metric definitions.
 - `docs/demo_checklist.md`: practical checklist for demo recording and presentation.
-- `docs/supervisor_demo_flow.md`: concise live-demo script for supervisor presentation.
 
 ## Setup
 
