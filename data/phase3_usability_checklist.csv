@@ -1,0 +1,8 @@
+task_id,task,participant_role,success,time_seconds,difficulty_1_to_5,notes
+U01,Log in to dashboard,author,,,,
+U02,Confirm live stream is updating,author,,,,
+U03,Arm the system,author,,,,
+U04,Trigger a person-detection scenario,author,,,,
+U05,Find the latest event snapshot,author,,,,
+U06,Request a manual snapshot,author,,,,
+U07,Disarm the system,author,,,,

@@ -19,7 +19,10 @@ Tested on Windows with Python 3.13.7.
 ## Project Documents
 
 - `docs/phase2_implementation_summary.md`: implementation summary for the thesis write-up.
-- `docs/evaluation_protocol.md`: official trial protocol and metric definitions.
+- `docs/evaluation_protocol.md`: Phase 2 quick-validation protocol and metric definitions.
+- `docs/phase3_testing_plan.md`: official Phase 3 testing and documentation plan.
+- `docs/phase3_deliverables_checklist.md`: final prototype, testing, thesis, and safety checklist.
+- `docs/quick_evaluation_results.md`: completed Phase 2 quick-validation result summary.
 - `docs/demo_checklist.md`: practical checklist for demo recording and presentation.
 
 ## Setup
@@ -199,7 +202,7 @@ Events are appended to `logs/events.jsonl`.
 
 ## Evaluation Notes
 
-Use `docs/evaluation_protocol.md` as the official Phase 2 test protocol. It defines the required scenarios, trial fields, outcome definitions, and reporting notes.
+Use `docs/evaluation_protocol.md` for Phase 2 quick validation. Use `docs/phase3_testing_plan.md` for the broader Phase 3 testing and documentation process.
 
 For thesis measurement, record the following fields during tests:
 
@@ -215,6 +218,12 @@ For live webcam trials, fill:
 data/evaluation_trials_template.csv
 ```
 
+For Phase 3 official trials, use:
+
+```text
+data/phase3_trials_template.csv
+```
+
 You can prefill trial rows from existing event logs:
 
 ```powershell
@@ -225,6 +234,12 @@ Then calculate metrics:
 
 ```powershell
 python scripts/evaluate_trials.py data/evaluation_trials_template.csv --output logs/evaluation_trials_summary.json
+```
+
+For Phase 3:
+
+```powershell
+python scripts/evaluate_trials.py data/phase3_trials_template.csv --output logs/phase3_trials_summary.json
 ```
 
 The CSV-based script reports TP, FP, FN, TN, precision, recall, F1 score, accuracy, specificity, per-scenario results, and latency summaries when the latency fields are filled.
@@ -243,3 +258,11 @@ python scripts/evaluate_results.py --tp 8 --fp 2 --fn 1 --output logs/evaluation
 ```
 
 `scripts/evaluate_results.py` reports precision, recall, F1 score, local event latency from `logs/events.jsonl`, and Telegram delivery latency from `logs/notifications.jsonl`.
+
+To generate a Markdown Phase 3 results report after filling the trial CSV:
+
+```powershell
+python scripts/generate_phase3_report.py --trials data/phase3_trials_template.csv --summary logs/phase3_trials_summary.json --status-monitor logs/status_monitor.csv --output docs/phase3_results_report.md
+```
+
+`docs/phase3_results_report.md` is generated evidence. Review it before including it in the thesis, especially if it references runtime logs or private test notes.
