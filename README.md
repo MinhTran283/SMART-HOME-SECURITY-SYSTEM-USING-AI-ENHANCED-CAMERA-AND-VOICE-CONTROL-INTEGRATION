@@ -224,6 +224,12 @@ For Phase 3 official trials, use:
 data/phase3_trials_template.csv
 ```
 
+The current Phase 3 detection trial results are recorded in:
+
+```text
+data/phase3_trials_results.csv
+```
+
 You can prefill trial rows from existing event logs:
 
 ```powershell
@@ -240,6 +246,12 @@ For Phase 3:
 
 ```powershell
 python scripts/evaluate_trials.py data/phase3_trials_template.csv --output logs/phase3_trials_summary.json
+```
+
+or, after filling the completed results file:
+
+```powershell
+python scripts/evaluate_trials.py data/phase3_trials_results.csv --output logs/phase3_trials_summary.json
 ```
 
 The CSV-based script reports TP, FP, FN, TN, precision, recall, F1 score, accuracy, specificity, per-scenario results, and latency summaries when the latency fields are filled.

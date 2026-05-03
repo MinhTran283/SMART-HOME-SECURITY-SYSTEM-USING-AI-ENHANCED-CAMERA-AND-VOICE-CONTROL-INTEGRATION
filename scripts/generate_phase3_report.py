@@ -140,6 +140,12 @@ def status_table(status_summary):
 
 
 def build_report(trial_csv, summary, status_summary):
+    counts = summary["overall"]["counts"]
+    metrics = summary["overall"]["metrics"]
+    trial_csv_display = str(trial_csv).replace("\\", "/")
+    latency_available = any(
+        values.get("count", 0) > 0 for values in summary["latency"].values()
+    )
     lines = [
         "# Phase 3 Results Report",
         "",
@@ -147,8 +153,15 @@ def build_report(trial_csv, summary, status_summary):
         "",
         "## Source Files",
         "",
-        f"- Trial CSV: `{trial_csv}`",
+        f"- Trial CSV: `{trial_csv_display}`",
         "- Metric source: `scripts/evaluate_trials.py`",
+        "",
+        "## Test Scope",
+        "",
+        f"The completed detection run contains {counts['evaluated_trials']} evaluated live-camera trials. Manual snapshot trials are not included in the detection metrics.",
+        "",
+        "The test evidence focuses on detection correctness and alert behavior. Per-event latency values are reported only when the trial CSV contains exported event and notification latency fields.",
+        "" if latency_available else "No Phase 3 latency values were provided in the trial CSV for this generated report.",
         "",
         "## Detection Metrics",
         "",
@@ -168,10 +181,12 @@ def build_report(trial_csv, summary, status_summary):
         "",
         "## Interpretation Notes",
         "",
-        "- Treat high metrics carefully if the number of trials is small.",
-        "- Discuss any false positive as unnecessary alert risk.",
-        "- Discuss any false negative as missed-intrusion risk.",
-        "- Compare Telegram latency against the practical expectation for a home alert.",
+        f"- True positives: {counts['true_positive']}; false positives: {counts['false_positive']}; false negatives: {counts['false_negative']}; true negatives: {counts['true_negative']}.",
+        f"- Person-present trials succeeded in {counts['true_positive']} out of {counts['true_positive'] + counts['false_negative']} cases.",
+        f"- No-person trials avoided unnecessary alerts in {counts['true_negative']} out of {counts['true_negative'] + counts['false_positive']} cases.",
+        f"- Precision, recall, F1 score, accuracy, and specificity are {fmt(metrics['precision'])}, {fmt(metrics['recall'])}, {fmt(metrics['f1_score'])}, {fmt(metrics['accuracy'])}, and {fmt(metrics['specificity'])}, respectively.",
+        "- Treat high metrics carefully if the number of trials is small; present the results as prototype evaluation rather than a large-scale statistical benchmark.",
+        "- Discuss any false positive as unnecessary alert risk and any false negative as missed-intrusion risk.",
         "- Mention whether the dashboard stream and status API stayed responsive during testing.",
         "",
         "## Limitations and Future Work",
