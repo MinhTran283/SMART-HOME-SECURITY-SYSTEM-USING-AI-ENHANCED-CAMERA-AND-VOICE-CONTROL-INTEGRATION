@@ -50,7 +50,13 @@ No Phase 3 latency values were provided in the trial CSV for this generated repo
 
 ## Stability Summary
 
-No status monitor CSV was provided. Run `scripts/monitor_status.py` to add stability evidence.
+| Field | Value |
+| --- | ---: |
+| Samples | 360 |
+| Successful samples | 360 |
+| Failed samples | 0 |
+| Average API response | 8.500 ms |
+| Maximum API response | 27.000 ms |
 
 ## Interpretation Notes
 
